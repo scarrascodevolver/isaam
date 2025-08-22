@@ -144,7 +144,7 @@
                 <div class="col-md-12 text-center">
                   <div id="form-message" style="display:none;"></div>
 
-                  <button type="submit" class="btn-getstarted">Enviar Mensaje</button>
+                  <a href="#" class="btn-getstarted" id="submit-btn">Enviar Mensaje</a>
                 </div>
 
               </div>
@@ -234,13 +234,13 @@
 
   <!-- Formspree AJAX Handler -->
   <script>
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
+    document.getElementById('submit-btn').addEventListener('click', function(e) {
       e.preventDefault();
       
-      var form = this;
+      var form = document.getElementById('contact-form');
       var formData = new FormData(form);
       var messageDiv = document.getElementById('form-message');
-      var submitBtn = form.querySelector('button[type="submit"]');
+      var submitBtn = document.getElementById('submit-btn');
       
       // Mostrar mensaje de enviando
       messageDiv.style.display = 'block';
