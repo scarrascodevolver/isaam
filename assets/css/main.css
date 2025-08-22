@@ -2767,6 +2767,25 @@ section,
   transform: scaleX(-1);
 }
 
+/* General btn-getstarted styles for use outside header */
+.btn-getstarted {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-size: 14px;
+  padding: 8px 25px;
+  border-radius: 4px;
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-getstarted:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
 .side-dog .heart {
   position: absolute;
   width: 6%;
