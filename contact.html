@@ -121,7 +121,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form id="contact-form" action="https://formspree.io/f/xdkdqddb" method="POST" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -141,9 +141,7 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Cargando</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Tu mensaje ha sido enviado. ¡Gracias!</div>
+                  <div id="form-message" style="display:none;"></div>
 
                   <button type="submit">Enviar Mensaje</button>
                 </div>
@@ -221,7 +219,7 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- Removed PHP email form script -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
@@ -232,6 +230,51 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Formspree AJAX Handler -->
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      var form = this;
+      var formData = new FormData(form);
+      var messageDiv = document.getElementById('form-message');
+      var submitBtn = form.querySelector('button[type="submit"]');
+      
+      // Mostrar mensaje de enviando
+      messageDiv.style.display = 'block';
+      messageDiv.style.color = '#007bff';
+      messageDiv.innerHTML = 'Enviando mensaje...';
+      submitBtn.disabled = true;
+      
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          messageDiv.style.color = '#28a745';
+          messageDiv.innerHTML = '✓ ¡Mensaje enviado exitosamente! Te responderemos pronto.';
+          form.reset();
+        } else {
+          throw new Error('Error en el envío');
+        }
+      })
+      .catch(error => {
+        messageDiv.style.color = '#dc3545';
+        messageDiv.innerHTML = '✗ Hubo un error al enviar el mensaje. Por favor intenta nuevamente.';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        setTimeout(() => {
+          messageDiv.style.display = 'none';
+        }, 5000);
+      });
+    });
+  </script>
 
 </body>
 
